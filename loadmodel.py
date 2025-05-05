@@ -6,8 +6,8 @@ from sklearn.preprocessing import LabelEncoder
 
 # === 1. Load model and columns ===
 # Set paths to the pkl folder in the root directory
-model_path = os.path.join(os.path.dirname(__file__), "pl", "RFA_model.pkl")
-columns_path = os.path.join(os.path.dirname(__file__), "pl", "model_columns.pkl")
+model_path = os.path.join(os.path.dirname(__file__), "pkl", "RFA_model.pkl")
+columns_path = os.path.join(os.path.dirname(__file__), "pkl", "model_columns.pkl")
 
 # Check if the model and columns file exist
 if not os.path.exists(model_path):
