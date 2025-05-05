@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TerraSense - Advanced Soil Analysis Platform">
+    <title>TerraSense - Soil Analytics</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js"></script>
+    
+    <!-- Third-party scripts (e.g., Chart.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../static/js/app.js" defer type="module"></script>
+
+
+</head>
+<body>
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <header>
+            <div class="logo-title-container">
+                <img src="../static/image/TerraSense_Logo.png" alt="TerraSense Logo" class="logo">
+                <h1>TerraSense</h1>
+            </div>
+        </header>
+        
+        <nav class="nav-bar" aria-label="Primary navigation">
+            <button type="button" id="loginButton" aria-label="Login">
+                <span id="loginIcon" role="img">🔑</span>
+                <span id="loginText">Login</span>
+            </button>  <br> 
+            
+            <button type="button" id="retrieve-csv" aria-label="Retrieve data">
+                <span role="img">💾</span> Retrieve Data
+            </button>
+        </nav> <br><br><br><br><br><br>
+        <div id="user-email-display" class="email-display" style="display: none;"></div>
+        
+    </aside>
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <h2>TerraSense Login</h2>
+    
+            <hr style="margin: 20px 0;">
+            <button id="googleLoginButton" style="background-color: #34972d; color: white; margin-top: 10px; padding: 15px; border: none; border-radius: 5px; width: 100%; font-weight: bold;">
+                Login with Google
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" style="display: none;"></div>
+
+    <!-- Popup Form -->
+    <div id="popupForm" style="display: none;">
+        <span class="close-btn" onclick="closePopup()">×</span>
+        <div class="popup-content">
+            <h2>Uploaded CSV Files</h2>
+            <div id="fileList"></div>
+            <div id="popup-buttons" style="margin-top: 20px; text-align: center;">
+                <button id="evaluateButton">Evaluate</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="section" aria-labelledby="soil-report-heading">
+            <h2 id="soil-report-heading">Soil Report</h2>
+            <div class="output-grid">
+                <div class="output-card">
+                    <h3>Nitrogen (N)</h3>
+                    <div class="output-value" id="nitrogen-output">-- ppm</div>
+                </div>
+                <div class="output-card">
+                    <h3>Phosphorus (P)</h3>
+                    <div class="output-value" id="phosphorus-output">-- ppm</div>
+                </div>
+                <div class="output-card">
+                    <h3>Potassium (K)</h3>
+                    <div class="output-value" id="potassium-output">-- ppm</div>
+                </div>
+                <div class="output-card">
+                    <h3>Soil pH</h3>
+                    <div class="output-value" id="ph-output">--</div>
+                </div>
+                <div class="output-card">
+                    <h3>Moisture Level</h3>
+                    <div class="output-value" id="soil_moisture-condition">--%</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="prediction-heading" id="prediction">
+            <h2 id="prediction-heading">Prediction for Fertility Analysis</h2>
+            <div class="prediction-status">
+                <span id="prediction-indicator" class="status-indicator"></span> <!-- Status indicator color -->                
+                <span id="prediction-category">--</span> <!-- Prediction result will appear here -->
+            </div>
+        </section>        
+        
+        <section class="section" aria-labelledby="recommendations-heading">
+            <h2 id="recommendations-heading">Agricultural Recommendations</h2>
+            <div class="recommendations-list" id="recommendation">
+                
+                <!-- pH Analysis -->
+                <div class="recommendation-item" id="ph-analysis">
+                    <h3>pH Analysis: <span id="ph-status">--</span></h3>
+                    <p><strong>Reference:</strong> <span id="ph-reference">--</span></p>
+                    <p><strong>Message:</strong> <span id="ph-message">--</span></p>
+                    <p><strong>Recommendation:</strong> <span id="ph-recommendation">--</span></p>
+                    <p><strong>Action:</strong> <span id="ph-action">--</span></p>
+                    <p><strong>Symptoms:</strong> <span id="ph-symptoms">--</span></p>
+                    <p><strong>Special Case:</strong> <span id="ph-special">--</span></p>
+                </div>
+                
+                <!-- Nitrogen Analysis -->
+                <div class="recommendation-item" id="nitrogen-analysis">
+                    <h3>Nitrogen Analysis: <span id="nitrogen-status">--</span></h3>
+                    <p><strong>Reference:</strong> <span id="nitrogen-reference">--</span></p>
+                    <p><strong>Message:</strong> <span id="nitrogen-message">--</span></p>
+                    <p><strong>Recommendation:</strong> <span id="nitrogen-recommendation">--</span></p>
+                    <p><strong>Action:</strong> <span id="nitrogen-action">--</span></p>
+                    <p><strong>Symptoms:</strong> <span id="nitrogen-symptoms">--</span></p>
+                    <p><strong>Special Case:</strong> <span id="nitrogen-special">--</span></p>
+                </div>
+        
+                <!-- Phosphorus Analysis -->
+                <div class="recommendation-item" id="phosphorus-analysis">
+                    <h3>Phosphorus Analysis: <span id="phosphorus-status">--</span></h3>
+                    <p><strong>Reference:</strong> <span id="phosphorus-reference">--</span></p>
+                    <p><strong>Message:</strong> <span id="phosphorus-message">--</span></p>
+                    <p><strong>Recommendation:</strong> <span id="phosphorus-recommendation">--</span></p>
+                    <p><strong>Action:</strong> <span id="phosphorus-action">--</span></p>
+                    <p><strong>Symptoms:</strong> <span id="phosphorus-symptoms">--</span></p>
+                    <p><strong>Special Case:</strong> <span id="phosphorus-special">--</span></p>
+                </div>
+        
+                <!-- Potassium Analysis -->
+                <div class="recommendation-item" id="potassium-analysis">
+                    <h3>Potassium Analysis: <span id="potassium-status">--</span></h3>
+                    <p><strong>Reference:</strong> <span id="potassium-reference">--</span></p>
+                    <p><strong>Message:</strong> <span id="potassium-message">--</span></p>
+                    <p><strong>Recommendation:</strong> <span id="potassium-recommendation">--</span></p>
+                    <p><strong>Action:</strong> <span id="potassium-action">--</span></p>
+                    <p><strong>Symptoms:</strong> <span id="potassium-symptoms">--</span></p>
+                    <p><strong>Special Case:</strong> <span id="potassium-special">--</span></p>
+                </div>
+        
+            </div>
+        </section>
+        
+        <section class="section chart-container" aria-labelledby="chart-heading">
+            <h2 id="chart-heading">Soil Value</h2>
+            <center>
+                <div class="chart-wrapper">
+                    <canvas id="npkChart" aria-label="Nutrient levels chart"></canvas>
+                </div>
+            </center>
+        </section>
+
+        <section class="section dataset" aria-labelledby="soil-data-heading">
+            <h2 id="soil-data-heading">Historical Soil Data</h2>
+            <div id="csvDataContainer"></div>
+            <div class="table-container">
+                <table id="csvTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Nitrogen</th>
+                            <th>Phosphorus</th>
+                            <th>Potassium</th>
+                            <th>Moisture</th>
+                            <th>pH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be inserted here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
