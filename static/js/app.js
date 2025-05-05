@@ -287,7 +287,7 @@ const loadCSVFileAndDisplayData = async (filename) => {
         if (filename.includes("D0")) window.d0Data = parsedData;
         if (filename.includes("D1")) window.d1Data = parsedData;
 
-        if (window.d0Data && window.d1Data) displayData(window.d0Data, window.d1Data);
+        if (window.d0Data && window.d1Data) displayData(window.d0Data, window.d1Data);  // error 1
     } catch (error) {
         console.error(error);
         alert(`Error fetching or parsing file: ${error.message}`);
@@ -453,15 +453,35 @@ function displayRecommendations(meanPh, modeNitrogen, modePhosphorus, modePotass
     const pData = analyzePhosphorus(modePhosphorus);
     const kData = analyzePotassium(modePotassium);
 
+    // function applyToDOM(prefix, data) {
+    //     document.getElementById(`${prefix}-status`).textContent = data.status || "--";
+    //     document.getElementById(`${prefix}-reference`).textContent = data.reference || "--";
+    //     document.getElementById(`${prefix}-message`).textContent = data.message || "--";
+    //     document.getElementById(`${prefix}-recommendation`).textContent = data.recommendation || "--";
+    //     document.getElementById(`${prefix}-action`).textContent = data.action || "--";
+    //     document.getElementById(`${prefix}-symptoms`).textContent = data.symptoms || "--";
+    //     document.getElementById(`${prefix}-special`).textContent = data.special_case || "--";
+    // }
+
     function applyToDOM(prefix, data) {
-        document.getElementById(`${prefix}-status`).textContent = data.status || "--";
-        document.getElementById(`${prefix}-reference`).textContent = data.reference || "--";
-        document.getElementById(`${prefix}-message`).textContent = data.message || "--";
-        document.getElementById(`${prefix}-recommendation`).textContent = data.recommendation || "--";
-        document.getElementById(`${prefix}-action`).textContent = data.action || "--";
-        document.getElementById(`${prefix}-symptoms`).textContent = data.symptoms || "--";
-        document.getElementById(`${prefix}-special`).textContent = data.special_case || "--";
+        const elements = [
+            "status",
+            "reference",
+            "message",
+            "recommendation",
+            "action",
+            "symptoms",
+            "special"
+        ];
+
+        elements.forEach((element) => {
+            const el = document.getElementById(`${prefix}-${element}`);
+            if (el) {
+                el.textContent = data[element] || "--"; // Only update if element exists
+            }
+        });
     }
+    ///-----------------------------------///
 
     applyToDOM("ph", phData);
     applyToDOM("nitrogen", nData);
