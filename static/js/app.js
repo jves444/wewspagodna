@@ -171,20 +171,20 @@ window.closePopup = () => {
     overlay.style.display = "none";
     popupForm.style.display = "none";
 };
-function getRecommendationText(status) {
-    switch (status) {
-        case 'Low':
-            return 'Consider increasing nutrient levels.';
-        case 'Moderate':
-            return 'The levels are acceptable, but improvement is possible.';
-        case 'High':
-            return 'The levels are good, no significant changes needed.';
-        case 'Optimal':
-            return 'The levels are optimal for plant growth.';
-        default:
-            return '';
-    }
-}
+// function getRecommendationText(status) {
+//     switch (status) {
+//         case 'Low':
+//             return 'Consider increasing nutrient levels.';
+//         case 'Moderate':
+//             return 'The levels are acceptable, but improvement is possible.';
+//         case 'High':
+//             return 'The levels are good, no significant changes needed.';
+//         case 'Optimal':
+//             return 'The levels are optimal for plant growth.';
+//         default:
+//             return '';
+//     }
+// }
 
 let npkChartInstance;
 
