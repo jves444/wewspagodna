@@ -138,16 +138,16 @@ body {
     .sidebar {
         transform: translateX(-100%);
     }
-    
+
     .sidebar.active {
         transform: translateX(0);
     }
-    
+
     .container {
         margin-left: 0;
         padding: 1rem;
     }
-    
+
     .menu-toggle {
         display: block;
     }
@@ -157,7 +157,7 @@ body {
     .section {
         padding: 1.5rem;
     }
-    
+
     .nav-bar button {
         padding: 0.75rem 1rem;
         font-size: 0.9rem;
@@ -205,6 +205,7 @@ body {
     background: #fffcfc;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
+
 .file-item {
     padding: 13px;
     margin-bottom: 5px;
@@ -273,10 +274,15 @@ body {
     animation: spin 1s linear infinite;
     margin: 10px auto;
 }
-          
+
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); } 
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Hidden Class */
@@ -291,7 +297,8 @@ body {
 
 /* Table Styles */
 .table-container {
-    max-height: 300px; /* Makes table scrollable */
+    max-height: 300px;
+    /* Makes table scrollable */
     overflow-y: auto;
     border: 1px solid #ccc;
 }
@@ -301,7 +308,7 @@ body {
     border-collapse: collapse;
 }
 
-.data-table th, 
+.data-table th,
 .data-table td {
     padding: 12px;
     text-align: left;
@@ -325,8 +332,13 @@ body {
 }
 
 @keyframes loading {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* Output Cards */
@@ -468,6 +480,7 @@ body {
         opacity: 0;
         transform: translate(-50%, -55%);
     }
+
     to {
         opacity: 1;
         transform: translate(-50%, -50%);
@@ -497,7 +510,7 @@ body {
 }
 
 
-.email-display{
+.email-display {
     text-align: center;
     margin-top: 0.75rem;
     background-color: #42c081;
@@ -506,11 +519,13 @@ body {
 }
 
 .chart-wrapper {
-    width: 300px; /* or 250px, 200px depending on how small you want */
+    width: 300px;
+    /* or 250px, 200px depending on how small you want */
     height: 300px;
     margin: auto;
     position: relative;
 }
+
 .chart-wrapper canvas {
     width: 100% !important;
     height: 100% !important;
@@ -573,16 +588,23 @@ body {
 
 /* Special Status Colors via Dynamic Classes */
 .low {
-    border-left: 15px solid #FF6347; /* Red for Low */
+    border-left: 15px solid #FF6347;
+    /* Red for Low */
 }
+
 .moderate {
-    border-left: 15px solid #FFA500; /* Orange for Moderate */
+    border-left: 15px solid #FFA500;
+    /* Orange for Moderate */
 }
+
 .high {
-    border-left: 15px solid #32CD32; /* Green for High */
+    border-left: 15px solid #32CD32;
+    /* Green for High */
 }
+
 .optimal {
-    border-left: 15px solid #4CAF50; /* Green for Optimal */
+    border-left: 15px solid #4CAF50;
+    /* Green for Optimal */
 }
 
 /* Responsive Font Scaling */
@@ -590,6 +612,7 @@ body {
     #recommendations-heading {
         font-size: 26px;
     }
+
     .recommendation-item h3 {
         font-size: 22px;
     }
@@ -599,7 +622,8 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: gray; /* Default if no prediction */
+    background-color: gray;
+    /* Default if no prediction */
 }
 
 .status-low {
