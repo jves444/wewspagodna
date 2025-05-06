@@ -193,7 +193,7 @@ body {
 /*-------------------*/
 @media (max-width: 768px) {
     body {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .sidebar {
@@ -587,19 +587,29 @@ body {
 .recommendations-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding-left: 0;
+    gap: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 /* Individual Recommendation Item */
-.recommendation-item {
+/* .recommendation-item {
     background-color: #f4fff4;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     transition: border-left 0.3s ease;
+} */
+.recommendation-item {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
+
 
 /* Recommendation Title */
 .recommendation-item h3 {
