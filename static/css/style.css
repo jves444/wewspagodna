@@ -33,6 +33,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    flex-direction: row;
 }
 
 .logo {
@@ -43,7 +44,8 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
-    width: 280px;
+    width: 250px;
+    flex-shrink: 0;
     background: var(--primary-color);
     color: white;
     position: fixed;
@@ -135,7 +137,7 @@ body {
     box-shadow: var(--shadow);
 }
 
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
     .sidebar {
         transform: translateX(-100%);
     }
@@ -152,8 +154,42 @@ body {
     .menu-toggle {
         display: block;
     }
+} */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: none;
+        /* <== Fix: Don't hide sidebar */
+        position: static;
+        /* Optional: Let it flow with content */
+        max-width: 20%;
+        /* Optional: Make full-width on mobile */
+        height: 100vh;
+        /* Optional: Let it shrink with content */
+        padding: 1rem;
+    }
+
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .container {
+        margin-left: 0;
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .menu-toggle {
+        display: none;
+        /* Hide toggle since sidebar is always shown */
+    }
 }
 
+/*-------------------*/
 @media (max-width: 768px) {
     .section {
         padding: 1.5rem;
