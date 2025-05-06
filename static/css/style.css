@@ -32,7 +32,6 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
     flex-direction: row;
 }
 
@@ -169,18 +168,20 @@ body {
     }
 
     body {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
     }
 
     .sidebar {
-        width: 100%;
+        width: 20%;
         height: auto;
     }
 
     .container {
         margin-left: 0;
         padding: 1rem;
-        width: 100%;
+        width: 80%;
     }
 
     .menu-toggle {
@@ -191,13 +192,18 @@ body {
 
 /*-------------------*/
 @media (max-width: 768px) {
-    .section {
-        padding: 1.5rem;
+    body {
+        flex-direction: column;
     }
 
-    .nav-bar button {
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .container {
+        width: 100%;
+        padding: 1rem;
     }
 }
 
