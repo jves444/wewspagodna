@@ -471,7 +471,7 @@ function displayRecommendations(meanPh, modeNitrogen, modePhosphorus, modePotass
             "recommendation",
             "action",
             "symptoms",
-            "special_case"
+            "special case"
         ];
 
         elements.forEach((element) => {
@@ -495,7 +495,7 @@ function analyzePh(meanPh) {
     if (meanPh < 4.5) {
         return {
             status: "Ultra Acidic",
-            reference: "pH < 4.5",
+            reference: meanPh + " < 4.5",
             message: "Soil is extremely acidic. Crop growth is highly limited.",
             recommendation: "Apply Agricultural Lime, Wood Ash, and Organic Matter.",
             action: "Use Calcium Nitrate or Potassium Nitrate.",
@@ -505,7 +505,7 @@ function analyzePh(meanPh) {
     } else if (meanPh >= 4.5 && meanPh <= 5.0) {
         return {
             status: "Strongly Acidic",
-            reference: "4.5 ≤ pH ≤ 5.0",
+            reference: "4.5 ≤ " + meanPh + "≤ 5.0",
             message: "Soil acidity is strongly affecting nutrient availability.",
             recommendation: "Apply Dolomitic Lime, Compost.",
             action: "Add Calcium Nitrate and maintain organic cover.",
@@ -515,7 +515,7 @@ function analyzePh(meanPh) {
     } else if (meanPh > 5.0 && meanPh <= 5.5) {
         return {
             status: "Moderately Acidic",
-            reference: "5.0 < pH ≤ 5.5",
+            reference: "5.0 < " + meanPh + " ≤ 5.5",
             message: "Acidity present, but some crops may tolerate it.",
             recommendation: "Apply Lime in small amounts and Compost.",
             action: "Use Balanced NPK Fertilizers.",
@@ -525,7 +525,7 @@ function analyzePh(meanPh) {
     } else if (meanPh > 5.5 && meanPh <= 6.0) {
         return {
             status: "Slightly Acidic",
-            reference: "5.5 < pH ≤ 6.0",
+            reference: "5.5 < " + meanPh + " ≤ 6.0",
             message: "Soil is slightly acidic, ideal for many crops.",
             recommendation: "Add minimal Lime and Compost.",
             action: "Use Super Phosphate for phosphorus supply.",
@@ -535,7 +535,7 @@ function analyzePh(meanPh) {
     } else if (meanPh > 6.0 && meanPh <= 6.5) {
         return {
             status: "Neutral (Optimal Zone)",
-            reference: "6.0 < pH ≤ 6.5",
+            reference: "6.0 < " + meanPh + " ≤ 6.5",
             message: "Ideal pH for most nutrient availability.",
             recommendation: "Maintain with Compost and Balanced Fertilizers.",
             action: "Routine monitoring and organic mulching.",
@@ -545,7 +545,7 @@ function analyzePh(meanPh) {
     } else if (meanPh > 6.5 && meanPh <= 7.5) {
         return {
             status: "Slightly Alkaline",
-            reference: "6.5 < pH ≤ 7.5",
+            reference: "6.5 < " + meanPh + "≤ 7.5",
             message: "Slight alkalinity may limit iron and phosphorus uptake.",
             recommendation: "Apply Elemental Sulfur and Organic Matter.",
             action: "Use Iron Sulfate to combat chlorosis.",
@@ -555,7 +555,7 @@ function analyzePh(meanPh) {
     } else if (meanPh > 7.5 && meanPh <= 8.5) {
         return {
             status: "Moderately Alkaline",
-            reference: "7.5 < pH ≤ 8.5",
+            reference: "7.5 < " + meanPh + "≤ 8.5",
             message: "Moderate alkalinity significantly affects nutrient solubility.",
             recommendation: "Use Elemental Sulfur, Gypsum.",
             action: "Use Acidic Fertilizers like Ammonium Sulfate.",
@@ -565,7 +565,7 @@ function analyzePh(meanPh) {
     } else {
         return {
             status: "Strongly Alkaline",
-            reference: "pH > 8.5",
+            reference: meanPh + " > 8.5",
             message: "Soil is highly alkaline and unsuitable for most crops.",
             recommendation: "Apply Elemental Sulfur and Gypsum.",
             action: "Use Acid-forming Fertilizers and Organic Mulch.",
