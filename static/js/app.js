@@ -471,7 +471,7 @@ function displayRecommendations(meanPh, modeNitrogen, modePhosphorus, modePotass
             "recommendation",
             "action",
             "symptoms",
-            "special_case"
+            "special"
         ];
 
         elements.forEach((element) => {
