@@ -91,7 +91,8 @@ body {
 
 /* Main Content */
 .container {
-    margin-left: 280px;
+    max-width: 80%;
+    margin-left: 20%;
     padding: 2rem;
     transition: margin 0.3s ease-in-out;
     flex-grow: 1;
@@ -100,7 +101,7 @@ body {
 .section {
     background: var(--card-bg);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 2%;
     margin-bottom: 2rem;
     box-shadow: var(--shadow);
     transition: transform 0.2s ease;
