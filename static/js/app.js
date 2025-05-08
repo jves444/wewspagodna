@@ -42,6 +42,30 @@ const fileList = document.getElementById("fileList");
 const evaluateButton = document.getElementById("evaluateButton");
 const deleteButton = document.getElementById("deleteButton");
 
+//button retrieve disable
+document.addEventListener("DOMContentLoaded", () => {
+    const loginText = document.getElementById("loginText");
+    const retrieveButton = document.getElementById("retrieve-csv");
+
+    function updateButtonVisibility() {
+        if (loginText.textContent.trim() === "Login") {
+            retrieveButton.disabled = true;
+            retrieveButton.style.display = "none";
+        } else {
+            retrieveButton.disabled = false;
+            retrieveButton.style.display = "inline-block"; // or "block"
+        }
+    }
+
+    // Run it once on page load
+    updateButtonVisibility();
+
+    // Observe changes in loginText
+    const observer = new MutationObserver(updateButtonVisibility);
+    observer.observe(loginText, { childList: true, characterData: true, subtree: true });
+});
+
+
 // CSV Folder Reference
 const csvFolderRef = ref(storage, "csv_uploads");
 

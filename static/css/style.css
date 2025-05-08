@@ -564,7 +564,7 @@ h3 {
 }
 
 .logo-title-container h1 {
-    font-size: clamp(1rem, 8vw, 3rem);
+    font-size: clamp(1rem, 8vw, 2rem);
     width: 100%;
     white-space: normal;
     /* or nowrap to keep it on one line */
@@ -588,13 +588,14 @@ h3 {
     margin: auto;
     position: relative;
     align-items: center;
+
 }
 
 .chart-wrapper canvas {
     width: 100% !important;
     height: 100% !important;
-
 }
+
 
 /* Heading Styling */
 #recommendations-heading {
