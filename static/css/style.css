@@ -186,7 +186,7 @@ h3 {
     }
 }
 
-/*--------MOBILE-----------*/
+/*--------tablet-----------*/
 @media (max-width: 768px) {
     body {
         flex-direction: row;
@@ -202,6 +202,60 @@ h3 {
     .container {
         width: 80%;
         padding: 1rem;
+    }
+}
+
+/* mobiles */
+@media (max-width: 425px) {
+    body {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static !important;
+    }
+
+    .container {
+        width: 80%;
+        padding: 1rem;
+    }
+}
+
+/* Small phones - max width 375px */
+@media (max-width: 375px) {
+    body {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static !important;
+    }
+
+    .container {
+        width: 80%;
+        padding: 0.75rem;
+    }
+}
+
+/* Extra small phones - max width 320px */
+@media (max-width: 320px) {
+    body {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static !important;
+    }
+
+    .container {
+        width: 80%;
+        padding: 0.5rem;
     }
 }
 
