@@ -371,7 +371,8 @@ async function fetchAvailableDates(userEmail) {
 
 async function sendCSVDataToBackend(d0Data, d1Data) {
     try {
-        const response = await fetch('http://localhost:5000/evaluate', {
+        const backendUrl = process.env.BACKEND_URL || 'https://your-app-name.railway.app';
+        const response = await fetch(`${backendUrl}/evaluate`, { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
