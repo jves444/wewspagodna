@@ -371,7 +371,11 @@ async function fetchAvailableDates(userEmail) {
 
 async function sendCSVDataToBackend(d0Data, d1Data) {
     try {
-        const backendUrl = process.env.BACKEND_URL || 'https://your-app-name.railway.app';
+        if (!d0Data.length || !d1Data.length) {
+        console.error("No data to send to backend");
+        return;
+        }
+        const backendUrl = process.env.BACKEND_URL || 'terra-sense-production.up.railway.app';
         const response = await fetch(`${backendUrl}/evaluate`, { 
             method: 'POST',
             headers: {
