@@ -1,8 +1,11 @@
-import os
+import numpy as np
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pandas as pd
+from scipy import stats
+import os
 import joblib
+from loadmodel import predict
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 CORS(app, origins="*")
