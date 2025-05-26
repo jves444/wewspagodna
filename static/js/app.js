@@ -65,6 +65,17 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(loginText, { childList: true, characterData: true, subtree: true });
 });
 
+//config modal 
+window.onload = function() {
+    window.openConfigModal = function() {
+    document.getElementById("config-modal").style.display = "block";
+    };
+
+    window.closeConfigModal = function() {
+    document.getElementById("config-modal").style.display = "none";
+    };
+};
+
 
 // CSV Folder Reference
 const csvFolderRef = ref(storage, "csv_uploads");

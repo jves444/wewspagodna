@@ -33,12 +33,18 @@
         <nav class="nav-bar" aria-label="Primary navigation">
             <button type="button" id="loginButton" aria-label="Login">
                 <span id="loginIcon" role="img">🔑</span>
-                <span id="loginText">Login</span>
+                <span id="loginText">Login With Firebase Account</span>
             </button>  <br> 
             
+            <button onclick="openConfigModal()" style="padding: 10px 20px; background-color: #34972d; color: white; border: none; border-radius: 5px;">Device Configuration
+
+            </button>
+
+
             <button type="button" id="retrieve-csv" aria-label="Retrieve data">
                 <span role="img">💾</span> Retrieve Data
             </button>
+
         </nav> <br><br><br>
         <div id="user-email-display" class="email-display" style="display: none;">
 
@@ -57,6 +63,31 @@
             </button>
         </div>
     </div>
+
+    <!-- config Modal -->
+    <div id="config-modal" class="con_modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeConfigModal()">&times;</span>
+            <h2>Device Configuration</h2>
+            <hr>
+
+            <input type="text" id="emailNotification" placeholder="Email (Notification)">
+            <input type="text" id="uploadTime" placeholder="Upload Time">
+            <input type="text" id="readingInterval" placeholder="Reading Interval">
+
+
+            <button id="ConfigureButton">Configure</button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
 
     <!-- Overlay -->
     <div id="overlay" style="display: none;"></div>
