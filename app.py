@@ -4,14 +4,12 @@ from flask_cors import CORS
 import pandas as pd
 import joblib
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
+app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app, origins="*")
 
-
-@app.route("/")
+@app.route('/')
 def index():
-    return render_template("index.html")
-
+    return render_template('index.html')
 
 model_path = os.path.join(os.path.dirname(__file__), "..", "pkl", "RFA_model.pkl")
 columns_path = os.path.join(os.path.dirname(__file__), "..", "pkl", "model_columns.pkl")
@@ -23,19 +21,17 @@ except FileNotFoundError as e:
     print(f"Model loading error: {str(e)}")
     raise
 
-
 @app.after_request
 def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     return response
-
 
 def predict(row):
     try:
         df = pd.DataFrame([row])
-        df = df.reindex(columns=model_columns, fill_value=0)
+        df = df.reindex(columns=model_columns, fill_value=0)  
         prediction = model.predict(df)[0]
         print("Prediction for row:", row, "is", prediction)
         return prediction
@@ -43,13 +39,11 @@ def predict(row):
         print(f"Error predicting for row {row}: {str(e)}")
         return None
 
-
 def categorize_ph(ph_value):
     if ph_value < 4.5:
         return (
             f"Ultra Acidic: (pH: {ph_value}) \n"
-            f"Recommendation: Apply Agricultural Lime, Wood Ash, and Organic Matter. Use Calcium Nitrate or Potassium Nitrate.\n"
-        )
+            f"Recommendation: Apply Agricultural Lime, Wood Ash, and Organic Matter. Use Calcium Nitrate or Potassium Nitrate.\n")
     elif 4.5 <= ph_value <= 5.0:
         return (
             f"Strongly Acidic: (pH: {ph_value})\n"
@@ -57,35 +51,28 @@ def categorize_ph(ph_value):
         )
     elif 5.1 <= ph_value <= 5.5:
         return (
-            f"Moderately Acidic: (pH: {ph_value})\n"
-            f"Recommendation: Apply Lime in small amounts, Compost, and Balanced NPK Fertilizers.\n"
-        )
+            f"Moderately Acidic: (pH: {ph_value})\n" 
+            f"Recommendation: Apply Lime in small amounts, Compost, and Balanced NPK Fertilizers.\n")
     elif 5.6 <= ph_value <= 6.0:
         return (
-            f"Slightly Acidic: (pH: {ph_value}) \n"
-            f"Recommendation: Add minimal Lime, Compost, and Super Phosphate.\n"
-        )
+            f"Slightly Acidic: (pH: {ph_value}) \n" 
+            f"Recommendation: Add minimal Lime, Compost, and Super Phosphate.\n")
     elif 6.1 <= ph_value <= 6.5:
         return (
-            f"Neutral (Optimal Zone): (pH: {ph_value}) \n"
-            f"Recommendation: Maintain with Compost and Balanced Fertilizers.\n"
-        )
+            f"Neutral (Optimal Zone): (pH: {ph_value}) \n" 
+            f"Recommendation: Maintain with Compost and Balanced Fertilizers.\n")
     elif 6.6 <= ph_value <= 7.5:
         return (
             f"Slightly Alkaline: (pH: {ph_value}) \n"
-            f"Recommendation: Apply Elemental Sulfur, Organic Matter, and Iron Sulfate. \n"
-        )
+            f"Recommendation: Apply Elemental Sulfur, Organic Matter, and Iron Sulfate. \n")
     elif 7.6 <= ph_value <= 8.5:
         return (
             f"Moderately Alkaline: (pH: {ph_value})\n"
-            f"Recommendation: Use Elemental Sulfur, Gypsum, and Acidic Fertilizers.\n"
-        )
+            f"Recommendation: Use Elemental Sulfur, Gypsum, and Acidic Fertilizers.\n")
     else:
         return (
             f"Strongly Alkaline: (pH: {ph_value})\n"
-            f"Recommendation: Apply Elemental Sulfur, Gypsum, and Acid-forming Fertilizers.\n"
-        )
-
+            f"Recommendation: Apply Elemental Sulfur, Gypsum, and Acid-forming Fertilizers.\n")
 
 def nitrogen_recommendation(nitrogen_value):
     calculate_OM = (float(nitrogen_value) * 100) / 2000
@@ -188,7 +175,6 @@ def nitrogen_recommendation(nitrogen_value):
     else:
         return "No specific recommendation available."
 
-
 def phosphorus_recommendation(phosphorus_value):
     def olsen_method(P):
         if P < 9.0:
@@ -275,7 +261,6 @@ def phosphorus_recommendation(phosphorus_value):
             f"    Clay Soils: Prevent runoff by maintaining soil structure and organic matter.\n"
         )
 
-
 def potassium_recommendation(potassium_value):
     if potassium_value < 25:
         return (
@@ -317,14 +302,13 @@ def potassium_recommendation(potassium_value):
             f"  - Avoid excessive potassium fertilization to prevent nutrient imbalances.\n"
         )
 
-
-@app.route("/evaluate", methods=["POST"])
+@app.route('/evaluate', methods=['POST'])
 def evaluate():
     try:
         data = request.get_json()
 
-        d0_data = data.get("d0Data", [])
-        d1_data = data.get("d1Data", [])
+        d0_data = data.get('d0Data', [])
+        d1_data = data.get('d1Data', [])
 
         # Collect values
         nitrogen_vals = []
@@ -344,63 +328,53 @@ def evaluate():
                 "Nitrogen": nitrogen_vals[-1],
                 "Phosphorus": phosphorus_vals[-1],
                 "Potassium": potassium_vals[-1],
-                "Soil_pH": ph_vals[-1],
+                "Soil_pH": ph_vals[-1]
             }
 
             pred = predict(merged_row)
             predictions.append(pred)
 
         # Calculate and round average values
-        avg_nitrogen = (
-            round(sum(nitrogen_vals) / len(nitrogen_vals)) if nitrogen_vals else 0
-        )
-        avg_phosphorus = (
-            round(sum(phosphorus_vals) / len(phosphorus_vals)) if phosphorus_vals else 0
-        )
-        avg_potassium = (
-            round(sum(potassium_vals) / len(potassium_vals)) if potassium_vals else 0
-        )
+        avg_nitrogen = round(sum(nitrogen_vals) / len(nitrogen_vals)) if nitrogen_vals else 0
+        avg_phosphorus = round(sum(phosphorus_vals) / len(phosphorus_vals)) if phosphorus_vals else 0
+        avg_potassium = round(sum(potassium_vals) / len(potassium_vals)) if potassium_vals else 0
         avg_ph = round(sum(ph_vals) / len(ph_vals), 1) if ph_vals else 0
 
         overall_recommendations = {
             "ph": categorize_ph(avg_ph),
             "nitrogen": nitrogen_recommendation(avg_nitrogen),
             "phosphorus": phosphorus_recommendation(avg_phosphorus),
-            "potassium": potassium_recommendation(avg_potassium),
+            "potassium": potassium_recommendation(avg_potassium)
         }
 
         prediction_descriptions = {
             "Poor": "Compact soil, low SOM, poor drainage, low biology — all described explicitly.",
             "Moderate": "Mid-range scores, average biological/chemical balance.",
-            "High": "Optimal biological activity, good structure, high SOM — consistent across sources.",
+            "High": "Optimal biological activity, good structure, high SOM — consistent across sources."
         }
 
         predictions_with_descriptions = [
             {
                 "result": pred,
-                "description": prediction_descriptions.get(
-                    pred, "No description available."
-                ),
+                "description": prediction_descriptions.get(pred, "No description available.")
             }
             for pred in predictions
         ]
 
-        return jsonify(
-            {
-                "predictions": predictions_with_descriptions,
-                "overall_recommendation": overall_recommendations,
-                "averages": {
-                    "Nitrogen": avg_nitrogen,
-                    "Phosphorus": avg_phosphorus,
-                    "Potassium": avg_potassium,
-                    "Soil_pH": avg_ph,
-                },
+        return jsonify({
+            "predictions": predictions_with_descriptions,
+            "overall_recommendation": overall_recommendations,
+            "averages": {
+                "Nitrogen": avg_nitrogen,
+                "Phosphorus": avg_phosphorus,
+                "Potassium": avg_potassium,
+                "Soil_pH": avg_ph
             }
-        )
+        })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
+

@@ -25,7 +25,6 @@ moisture_encoder = LabelEncoder()
 moisture_encoder.classes_ = np.array(["DRY", "MOIST", "WET"])
 
 
-# === 3. Define prepare function ===
 # === 3. Define prepare function (now supports multiple inputs) ===
 def prepare_input(raw_inputs):
     """Prepare a list of raw input dicts for prediction"""
