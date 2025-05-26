@@ -375,7 +375,7 @@ async function sendCSVDataToBackend(d0Data, d1Data) {
         console.error("No data to send to backend");
         return;
         }
-        const backendUrl = process.env.BACKEND_URL || 'terra-sense-production.up.railway.app';
+        const backendUrl = 'https://terra-sense-production.up.railway.app';
         const response = await fetch(`${backendUrl}/evaluate`, { 
             method: 'POST',
             headers: {
